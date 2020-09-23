@@ -8,7 +8,7 @@ namespace Esport.entityLayer
     {
         private int JudgeLevel;
 
-        public Judge(int judgeLevel, string name, int phoneNumber, int pay, string jobType) : base(name, phoneNumber, pay, jobType)
+        public Judge(int judgeLevel, string name, int phoneNumber, int pay, string jobType, int id) : base(name, phoneNumber, pay, jobType, id)
         {
             JudgeLevel1 = judgeLevel;
         }

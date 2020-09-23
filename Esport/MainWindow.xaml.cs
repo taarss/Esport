@@ -393,5 +393,111 @@ namespace Esport
             Canvas.SetLeft(customPointer, pX);
             Cursor = Cursors.None;
         }
+
+        private void closeOverviewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            overviewPanel.Visibility = Visibility.Hidden;
+        }
+
+        private void overviewSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void overviewSale_Click(object sender, RoutedEventArgs e)
+        {
+            overviewStackpanel.Children.Clear();
+            overviewPanel.Visibility = Visibility.Visible;
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Salesman> players = databaseHandler.GetSalesman();
+            foreach (var item in players)
+            {
+                Button button = new Button();
+                button.Content = item.Name;
+                button.Tag = item.Id;
+                overviewStackpanel.Children.Add(button);
+                index++;
+            }
+        }
+
+        private void overviewTech_Click(object sender, RoutedEventArgs e)
+        {
+            overviewStackpanel.Children.Clear();
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            overviewPanel.Visibility = Visibility.Visible;
+            List<Technician> players = databaseHandler.GetTechnician();
+            foreach (var item in players)
+            {
+                Button button = new Button();
+                button.Content = item.Name;
+                button.Tag = item.Id;
+                overviewStackpanel.Children.Add(button);
+                index++;
+            }
+        }
+
+        private void overviewJudges_Click(object sender, RoutedEventArgs e)
+        {
+            overviewStackpanel.Children.Clear();
+            overviewPanel.Visibility = Visibility.Visible;
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Judge> players = databaseHandler.GetJudges();
+            foreach (var item in players)
+            {
+                Button button = new Button();
+                button.Content = item.Name;
+                button.Tag = item.Id;
+                overviewStackpanel.Children.Add(button);
+                index++;
+            }
+        }
+
+        private void overviewTour_Click(object sender, RoutedEventArgs e)
+        {
+            overviewStackpanel.Children.Clear();
+            overviewPanel.Visibility = Visibility.Visible;
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Tournament> players = databaseHandler.GetTournament();
+            foreach (var item in players)
+            {
+                Button button = new Button();
+                button.Content = item.TournamentName;
+                button.Tag = item.Id;
+                overviewStackpanel.Children.Add(button);
+                index++;
+            }
+        }
+
+        private void overviewPlayers_Click(object sender, RoutedEventArgs e)
+        {
+            overviewStackpanel.Children.Clear();
+            overviewPanel.Visibility = Visibility.Visible;
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Player> players = databaseHandler.GetPlayers();
+            foreach (var item in players)
+            {
+                Button button = new Button();
+                button.Content = item.IngameName;
+                button.Tag = item.Id;
+                overviewStackpanel.Children.Add(button);
+                index++;
+            }
+        }
+
+        private void overviewSponser_Click(object sender, RoutedEventArgs e)
+        {
+            overviewStackpanel.Children.Clear();
+            overviewPanel.Visibility = Visibility.Visible;
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Sponser> players = databaseHandler.GetSponser();
+            foreach (var item in players)
+            {
+                Button button = new Button();
+                button.Content = item.CompanyName;
+                button.Tag = item.Id;
+                overviewStackpanel.Children.Add(button);
+                index++;
+            }
+        }
     }
 }

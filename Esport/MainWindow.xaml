@@ -135,18 +135,18 @@
                     </Canvas>
                 </Canvas>
             </Canvas>
-            <Canvas x:Name="overview" Visibility="Hidden" Background="LightGray" Height="432" Width="609" Canvas.Left="193">
-                <Button Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="50">Spillere</Button>
-                <Button Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="90">Tournaments</Button>
-                <Button Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="130">Dommere</Button>
-                <Button Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="170">Teknikere</Button>
-                <Button Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="210">Sælgere</Button>
-                <Button Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="250">Sponsore</Button>
-                <Border x:Name="overviewPanel" Width="400" Canvas.Left="100" Canvas.Top="30" Height="350" Background="LightGray" BorderBrush="Black" BorderThickness="1">
+            <Canvas x:Name="overview" Visibility="Visible" Background="LightGray" Height="432" Width="609" Canvas.Left="193">
+                <Button x:Name="overviewPlayers" Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="50" Click="overviewPlayers_Click">Spillere</Button>
+                <Button x:Name="overviewTour" Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="90" Click="overviewTour_Click">Tournaments</Button>
+                <Button x:Name="overviewJudges" Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="130" Click="overviewJudges_Click">Dommere</Button>
+                <Button x:Name="overviewTech" Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="170" Click="overviewTech_Click">Teknikere</Button>
+                <Button x:Name="overviewSale" Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="210" Click="overviewSale_Click">Sælgere</Button>
+                <Button x:Name="overviewSponser" Width="200" FontSize="20" Canvas.Left="43" Canvas.Top="250" Click="overviewSponser_Click">Sponsore</Button>
+                <Border x:Name="overviewPanel" Visibility="Hidden" Width="400" Canvas.Left="100" Canvas.Top="30" Height="350" Background="LightGray" BorderBrush="Black" BorderThickness="1">
                     <Canvas>
-                        <Button BorderThickness="0" BorderBrush="Transparent" Background="Red" Foreground="White" FontSize="30" Width="50" Height="50" Canvas.Left="349">X</Button>
+                        <Button x:Name="closeOverviewBtn" BorderThickness="0" BorderBrush="Transparent" Background="Red" Foreground="White" FontSize="30" Width="43" Height="42" Canvas.Left="356" Click="closeOverviewBtn_Click">X</Button>
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" Height="274" Width="244" Canvas.Top="40" Canvas.Left="31">
-                            <StackPanel>
+                            <StackPanel x:Name="overviewStackpanel">
 
                             </StackPanel>
                         </ScrollViewer>

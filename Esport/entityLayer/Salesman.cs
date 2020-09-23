@@ -8,7 +8,7 @@ namespace Esport.entityLayer
     {
         private int salesmanLevel;
 
-        public Salesman(int salesmanLevel, string name, int phoneNumber, int pay, string jobType) : base(name, phoneNumber, pay, jobType)
+        public Salesman(int salesmanLevel, string name, int phoneNumber, int pay, string jobType, int id) : base(name, phoneNumber, pay, jobType, id)
         {
             this.SalesmanLevel = salesmanLevel;
         }
