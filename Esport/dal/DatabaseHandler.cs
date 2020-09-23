@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using Esport;
 using Esport.entityLayer;
@@ -35,7 +36,7 @@ namespace Esport.dal
             List<Player> players = new List<Player>();
             foreach (DataRow itemRow in customerTable.Rows)
             {
-                players.Add(new Player((string)itemRow["name"], (string)itemRow["ingameName"], (int)itemRow["rank"], (string)itemRow["phoneNumber"], (int)itemRow["sponserId"]));
+                players.Add(new Player((string)itemRow["name"], (string)itemRow["ingameName"], (int)itemRow["rank"], (string)itemRow["phoneNumber"]));
             }
             return players;
         }
@@ -57,5 +58,19 @@ namespace Esport.dal
             }
             return false;
         }
+
+        public int GetNewestPlayerId()
+        {
+            DataSet dataSet = Execute("SELECT id FROM Player");
+            DataTable customerTable = dataSet.Tables[0];
+            List<int> ids = new List<int>();
+            foreach (var item in customerTable.Rows)
+            {
+                ids.Add(Convert.ToInt32(item));
+            }
+            return ids.Max();
+
+        }
+
     }
 }

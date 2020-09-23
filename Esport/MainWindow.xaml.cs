@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Esport.dal;
+using Esport.business;
 
 namespace Esport
 {
@@ -21,6 +22,8 @@ namespace Esport
     /// </summary>
     public partial class MainWindow : Window
     {
+        Business business = new Business();
+        private bool addNewSponser;
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace Esport
         }
 
         private void playerRegNextBtn_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             if (playerName.Text != "" && playerPhoneNumber.Text != "" && playerRank.Text != "" && playerUsername.Text != "")
             {
                 ApiHandler apiHandler = new ApiHandler();
@@ -44,7 +47,7 @@ namespace Esport
                         }
                         else
                         {
-
+                            business.CreatePlayer(playerName.Text, playerUsername.Text, Convert.ToInt32(playerRank.Text), playerPhoneNumber.Text, 0);
                         }
                     }
                     catch (Exception)
@@ -57,6 +60,20 @@ namespace Esport
                 {
                     MessageBox.Show("Bruger findes ikke i riot database");
                 }
+            }
+        }
+
+        private void addSponserConfirmBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (companyName.Text != "" && field.Text != "" && cost.Text != "")
+            {
+                addNewSponser = true;
+                addSponser.Visibility = Visibility.Hidden;
+                business.CreateSponser(companyName.Text, field.Text, Convert.ToInt32(cost.Text));
+            }
+            else
+            {
+                MessageBox.Show("Du skal indtaste værdier");
             }
         }
     }
