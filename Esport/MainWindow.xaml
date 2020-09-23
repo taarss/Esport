@@ -43,11 +43,11 @@
                     <TextBox x:Name="playerPhoneNumber" FontSize="20" Width="208" Canvas.Left="212" Canvas.Top="186"></TextBox>
                     <TextBox x:Name="playerRank" FontSize="20" Width="208" Canvas.Left="212" Canvas.Top="143"></TextBox>
                     <TextBox x:Name="playerUsername" FontSize="20" Width="208" Canvas.Left="209" Canvas.Top="97"></TextBox>
-                    <Button FontSize="20" Canvas.Left="35" Canvas.Top="241">Tilføj sponsorere</Button>
+                    <Button x:Name="addSponserBtn" FontSize="20" Canvas.Left="35" Canvas.Top="241" Click="addSponserBtn_Click">Tilføj sponsorere</Button>
                     <Button x:Name="playerRegNextBtn" FontSize="20" Canvas.Left="466" Canvas.Top="242" Click="playerRegNextBtn_Click">Næste</Button>
                     <Border Visibility="Visible" x:Name="addSponser" Canvas.Left="100" BorderBrush="Black" BorderThickness="1" Width="377" Height="300" Background="LightGray">
                         <Canvas>
-                            <Button BorderBrush="Transparent" Background="Red" FontSize="20" Width="40" Foreground="White" Canvas.Left="336" Canvas.Top="-1">X</Button>
+                            <Button x:Name="closeAddSponser" BorderBrush="Transparent" Background="Red" FontSize="20" Width="40" Foreground="White" Canvas.Left="336" Canvas.Top="-1" Click="closeAddSponser_Click">X</Button>
                             <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="30">Firmanavn</TextBlock>
                             <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="80">Branche</TextBlock>
                             <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="130">Udgift</TextBlock>

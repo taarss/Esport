@@ -35,11 +35,9 @@ namespace Esport
             if (playerName.Text != "" && playerPhoneNumber.Text != "" && playerRank.Text != "" && playerUsername.Text != "")
             {
                 ApiHandler apiHandler = new ApiHandler();
-                try
-                {
+                
                     apiHandler.getUser(playerUsername.Text);
-                    try
-                    {
+                    
                         DatabaseHandler databaseHandler = new DatabaseHandler();
                         if (databaseHandler.DoesPlayerExists(playerPhoneNumber.Text) == true)
                         {
@@ -48,18 +46,14 @@ namespace Esport
                         else
                         {
                             business.CreatePlayer(playerName.Text, playerUsername.Text, Convert.ToInt32(playerRank.Text), playerPhoneNumber.Text, 0);
+                            if (addNewSponser == true)
+                            {
+                                business.CreateSponser(companyName.Text, field.Text, Convert.ToInt32(cost.Text));
+                            }
                         }
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Bruger findes ikke i riot database");
-                }
+                    
+                
+                
             }
         }
 
@@ -69,12 +63,22 @@ namespace Esport
             {
                 addNewSponser = true;
                 addSponser.Visibility = Visibility.Hidden;
-                business.CreateSponser(companyName.Text, field.Text, Convert.ToInt32(cost.Text));
             }
             else
             {
                 MessageBox.Show("Du skal indtaste værdier");
             }
+        }
+
+        private void addSponserBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addSponser.Visibility = Visibility.Visible;
+        }
+
+        private void closeAddSponser_Click(object sender, RoutedEventArgs e)
+        {
+            addSponser.Visibility = Visibility.Hidden;
+            addNewSponser = false;
         }
     }
 }
