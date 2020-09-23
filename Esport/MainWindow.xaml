@@ -6,55 +6,64 @@
         xmlns:local="clr-namespace:Esport"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
-        <Canvas x:Name="root">
+        <Canvas x:Name="RootCanvas" MouseMove="OnMouseMoveHandler" Background="Transparent">
             <Canvas x:Name="mainMenu" Background="LightGray" Height="434" Width="607" Canvas.Left="193">
-                <Image Stretch="Fill" Source="C:/Users/chri45n5/source/repos/Esport/Esport/img/bg2.jpg" Height="433" Width="604"></Image>
+                <TextBlock FontSize="60" Foreground="White" FontFamily="Century Gothic" Canvas.Left="63" Canvas.Top="24">Danmark - Esport</TextBlock>
+                <Rectangle Height="3" Fill="White" Width="338" Canvas.Left="134" Canvas.Top="112"></Rectangle>
+                <TextBlock Foreground="White" FontSize="20" FontFamily="Century Gothic" Canvas.Left="244" Canvas.Top="118">Version: 1.00</TextBlock>
             </Canvas>
-            <Canvas x:Name="menu" Height="436" Width="193" Background="LightSlateGray">
-                <Button x:Name="homeBtn" FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="11" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">Hjem</Button>
-                <Rectangle Height="3" Fill="White" Width="155" Canvas.Left="25" Canvas.Top="44"></Rectangle>
-                <Button x:Name="regBtn" FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="61" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">Registrer</Button>
-                <Rectangle Height="3" Fill="White" Width="155" Canvas.Left="25" Canvas.Top="94"></Rectangle>
-                <Button FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="111" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">Oversigt</Button>
-                <Rectangle Height="3" Fill="White" Width="155" Canvas.Left="25" Canvas.Top="144"></Rectangle>
-                <Button x:Name="exitBtn" FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="341" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">Exit</Button>
-            </Canvas>
-            <Canvas Name="registrerMenu" Background="LightGray" Height="434" Width="607" Canvas.Left="193" >
-                <TextBlock FontSize="40" Canvas.Left="213" Canvas.Top="4">Registrer</TextBlock>
+            <Border Margin="0,0,8,8" Background="White" BorderThickness="1">
+                <Canvas x:Name="menu" Height="436" Width="193" >
+                    <Image Height="436" Width="193" Source="C:/Users/chris/Source/Repos/taarss/Esport/Esport/img/bg3.png" Stretch="Fill"></Image>
+                    <Button x:Name="homeBtn" FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="11" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Click="homeBtn_Click">Hjem</Button>
+                    <Rectangle Height="3" Fill="White" Width="155" Canvas.Left="25" Canvas.Top="44"></Rectangle>
+                    <Button x:Name="regBtn" FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="61" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Click="regBtn_Click">Registrer</Button>
+                    <Rectangle Height="3" Fill="White" Width="155" Canvas.Left="25" Canvas.Top="94"></Rectangle>
+                    <Button FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="111" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >Oversigt</Button>
+                    <Rectangle Height="3" Fill="White" Width="155" Canvas.Left="25" Canvas.Top="144"></Rectangle>
+                    <Button x:Name="exitBtn" FontSize="25" Foreground="White" FontFamily="Century Gothic" Canvas.Left="36" Canvas.Top="341" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">Exit</Button>
+                </Canvas>
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
+                </Border.Effect>
+            </Border>
+            <Canvas Name="registrerMenu" Visibility="Hidden" Background="LightGray" Height="434" Width="607" Canvas.Left="193" >
+                <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="40" Canvas.Left="213" Canvas.Top="4">Registrer</TextBlock>
                 <Canvas x:Name="pickRegType" Background="LightGray" Height="349" Width="609" Canvas.Top="61">
                     <Viewbox Height="40" Canvas.Left="50" Canvas.Top="100">
-                        <RadioButton GroupName="registrerType">Spiller</RadioButton>
+                        <RadioButton x:Name="playerReg" Foreground="White" FontFamily="Century Gothic" GroupName="registrerType">Spiller</RadioButton>
                     </Viewbox>
                     <Viewbox Height="40" Canvas.Left="50" Canvas.Top="150">
-                        <RadioButton GroupName="registrerType">Turneringer</RadioButton>
+                        <RadioButton x:Name="tourReg" Foreground="White" FontFamily="Century Gothic" GroupName="registrerType">Turneringer</RadioButton>
                     </Viewbox>
                     <Viewbox Height="40" Canvas.Left="50" Canvas.Top="200">
-                        <RadioButton GroupName="registrerType">Ansat</RadioButton>
+                        <RadioButton x:Name="staffReg" Foreground="White" FontFamily="Century Gothic" GroupName="registrerType">Ansat</RadioButton>
                     </Viewbox>
-                    <Button FontSize="30" Canvas.Left="437" Canvas.Top="291">Næste</Button>
+                    <Button x:Name="regTypeBtn" Foreground="White" FontFamily="Century Gothic" FontSize="30" Canvas.Left="427" Canvas.Top="286" Click="regTypeBtn_Click" Height="46" Width="112">Næste</Button>
                 </Canvas>
-                <Canvas x:Name="regPlayer"  Background="LightGray" Height="349" Width="609" Canvas.Top="61">
-                    <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="45">Navn</TextBlock>
-                    <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="97">Riot brugernavn</TextBlock>
-                    <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="141">Rank</TextBlock>
-                    <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="185">Telefon nummer</TextBlock>
-                    <TextBox x:Name="playerName" FontSize="20" Width="208" Canvas.Left="208" Canvas.Top="48"></TextBox>
-                    <TextBox x:Name="playerPhoneNumber" FontSize="20" Width="208" Canvas.Left="212" Canvas.Top="186"></TextBox>
-                    <TextBox x:Name="playerRank" FontSize="20" Width="208" Canvas.Left="212" Canvas.Top="143"></TextBox>
-                    <TextBox x:Name="playerUsername" FontSize="20" Width="208" Canvas.Left="209" Canvas.Top="97"></TextBox>
-                    <Button x:Name="addSponserBtn" FontSize="20" Canvas.Left="35" Canvas.Top="241" Click="addSponserBtn_Click">Tilføj sponsorere</Button>
-                    <Button x:Name="playerRegNextBtn" FontSize="20" Canvas.Left="466" Canvas.Top="242" Click="playerRegNextBtn_Click">Næste</Button>
+                <Canvas x:Name="regPlayer" Visibility="Hidden" Background="LightGray" Height="349" Width="609" Canvas.Top="61">
+                    <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="45">Navn</TextBlock>
+                    <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="97">Riot brugernavn</TextBlock>
+                    <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="141">Rank</TextBlock>
+                    <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="185">Telefon nummer</TextBlock>
+                    <TextBox x:Name="playerName" Foreground="White" FontFamily="Century Gothic" FontSize="20" Width="208" Canvas.Left="208" Canvas.Top="48"></TextBox>
+                    <TextBox x:Name="playerPhoneNumber" Foreground="White" FontFamily="Century Gothic" FontSize="20" Width="208" Canvas.Left="212" Canvas.Top="186"></TextBox>
+                    <TextBox x:Name="playerRank" Foreground="White" FontFamily="Century Gothic" FontSize="20" Width="208" Canvas.Left="212" Canvas.Top="143"></TextBox>
+                    <TextBox x:Name="playerUsername" Foreground="White" FontFamily="Century Gothic" FontSize="20" Width="208" Canvas.Left="209" Canvas.Top="97"></TextBox>
+                    <Button x:Name="addSponserBtn" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="241" Click="addSponserBtn_Click" Height="42" Width="168">Tilføj sponsorere</Button>
+                    <Button x:Name="playerRegNextBtn" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="452" Canvas.Top="242" Click="playerRegNextBtn_Click" Height="37" Width="83">Næste</Button>
                     <Border Visibility="Visible" x:Name="addSponser" Canvas.Left="100" BorderBrush="Black" BorderThickness="1" Width="377" Height="300" Background="LightGray">
-                        <Canvas>
+                        <Canvas x:Name="addSponserCanvas">
                             <Button x:Name="closeAddSponser" BorderBrush="Transparent" Background="Red" FontSize="20" Width="40" Foreground="White" Canvas.Left="336" Canvas.Top="-1" Click="closeAddSponser_Click">X</Button>
-                            <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="30">Firmanavn</TextBlock>
-                            <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="80">Branche</TextBlock>
-                            <TextBlock FontSize="20" Canvas.Left="35" Canvas.Top="130">Udgift</TextBlock>
-                            <TextBox x:Name="companyName" FontSize="20" Width="187" Canvas.Left="137" Canvas.Top="30"></TextBox>
-                            <TextBox x:Name="field" FontSize="20" Width="187" Canvas.Left="137" Canvas.Top="80"></TextBox>
-                            <TextBox x:Name="cost" FontSize="20" Width="187" Canvas.Left="137" Canvas.Top="130"></TextBox>
-                            <Button x:Name="addSponserConfirmBtn" FontSize="20" Height="37" Width="87" Canvas.Left="262" Canvas.Top="234" Click="addSponserConfirmBtn_Click">Tilføj</Button>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="30">Firmanavn</TextBlock>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="80">Branche</TextBlock>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="35" Canvas.Top="130">Udgift</TextBlock>
+                            <TextBox Foreground="White" FontFamily="Century Gothic" x:Name="companyName" FontSize="20" Width="173" Canvas.Left="151" Canvas.Top="30"></TextBox>
+                            <TextBox Foreground="White" FontFamily="Century Gothic" x:Name="field" FontSize="20" Width="173" Canvas.Left="151" Canvas.Top="80"></TextBox>
+                            <TextBox Foreground="White" FontFamily="Century Gothic" x:Name="cost" FontSize="20" Width="173" Canvas.Left="151" Canvas.Top="130"></TextBox>
+                            <Button Foreground="White" FontFamily="Century Gothic" x:Name="addSponserConfirmBtn" FontSize="20" Height="37" Width="87" Canvas.Left="262" Canvas.Top="234" Click="addSponserConfirmBtn_Click">Tilføj</Button>
                         </Canvas>
                         <Border.Effect>
                             <DropShadowEffect />
@@ -62,63 +71,68 @@
                     </Border>
                 </Canvas>
                 <Canvas x:Name="regtournament" Visibility="Hidden" Background="LightGray" Height="432" Width="609">
-                    <TextBlock FontSize="30" Canvas.Left="158" Canvas.Top="6">Registerer Tournament</TextBlock>
+                    <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="30" Canvas.Left="158" Canvas.Top="6">Registerer Tournament</TextBlock>
                     <Viewbox Height="30" Canvas.Left="40" Canvas.Top="100">
-                        <RadioButton GroupName="typeTournament">1v1</RadioButton>
+                        <RadioButton  x:Name="OnevsOneBtn" Foreground="White" FontFamily="Century Gothic" IsChecked="True" GroupName="typeTournament">1v1</RadioButton>
                     </Viewbox>
                     <Viewbox Height="30" Canvas.Left="140" Canvas.Top="100">
-                        <RadioButton GroupName="typeTournament">3v3</RadioButton>
+                        <RadioButton x:Name="TwovsTwoBtn" Foreground="White" FontFamily="Century Gothic" GroupName="typeTournament">3v3</RadioButton>
                     </Viewbox>
                     <Viewbox Height="30" Canvas.Left="240" Canvas.Top="100">
-                        <RadioButton GroupName="typeTournament">5v5</RadioButton>
+                        <RadioButton x:Name="FivevsFiveBtn" Foreground="White" FontFamily="Century Gothic" GroupName="typeTournament">5v5</RadioButton>
                     </Viewbox>
-                    <TextBlock FontSize="20" Canvas.Left="41" Canvas.Top="150">Tournament navn</TextBlock>
-                    <TextBox FontSize="20" Width="154" Canvas.Left="206" Canvas.Top="152" ></TextBox>
-                    <Button FontSize="20" Canvas.Left="51" Canvas.Top="213">Vælg hold 1</Button>
-                    <Button FontSize="20" Canvas.Left="51" Canvas.Top="262">Vælg hold 2</Button>
-                    <Button FontSize="20" Canvas.Left="50" Canvas.Top="307">Vælg dommer</Button>
-                    <Border x:Name="pickPlayers" Visibility="Hidden" Canvas.Left="41" BorderBrush="Black" BorderThickness="1" Width="530" Height="351" Background="LightGray" Canvas.Top="21">
+                    <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="41" Canvas.Top="150">Tournament navn</TextBlock>
+                    <TextBox x:Name="tourName"  Foreground="White" FontFamily="Century Gothic" FontSize="20" Width="154" Canvas.Left="206" Canvas.Top="152" ></TextBox>
+                    <Button x:Name="pickTeamOneBtn" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="51" Canvas.Top="213" Width="146" Click="pickTeamOneBtn_Click">Vælg hold 1</Button>
+                    <Button x:Name="pickTeamTwoBtn" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="51" Canvas.Top="262" Width="146" Click="pickTeamTwoBtn_Click">Vælg hold 2</Button>
+                    <Button x:Name="pickJudgeBtn" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="50" Canvas.Top="307" Click="pickJudgeBtn_Click">Vælg dommer</Button>
+                    <Button x:Name="regTourBtn" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="469" Canvas.Top="309" Height="40" Width="81" Click="regTourBtn_Click" >Færdig</Button>
+                    <Border x:Name="pickPlayers" Visibility="Hidden" Canvas.Left="41" BorderBrush="Black" BorderThickness="1" Width="525" Height="351" Background="LightGray" Canvas.Top="21">
                         <Canvas>
-                            <TextBlock FontSize="20" Canvas.Left="211" Canvas.Top="5">Hold X</TextBlock>
-                            <TextBlock FontSize="20" Canvas.Left="51" Canvas.Top="57">Alle spiller</TextBlock>
-                            <TextBlock FontSize="20" Canvas.Left="224" Canvas.Top="57">Valgte spiller</TextBlock>
+                            <TextBlock x:Name="teamTxt" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="237" Canvas.Top="4">Hold X</TextBlock>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="51" Canvas.Top="57">Alle spiller</TextBlock>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="224" Canvas.Top="57">Valgte spiller</TextBlock>
                             <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" Height="226" Width="150" Canvas.Top="94" Canvas.Left="20">
-                                <StackPanel>
+                                <StackPanel x:Name="allPlayersStackPanel">
 
                                 </StackPanel>
                             </ScrollViewer>
                             <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" Height="225" Width="158" Canvas.Top="95" Canvas.Left="210">
-                                <StackPanel>
+                                <StackPanel x:Name="selectedPlayersStackpanel">
 
                                 </StackPanel>
                             </ScrollViewer>
-                            <Button FontSize="20" Canvas.Left="431" Canvas.Top="288">Færdig</Button>
+                            <Button x:Name="completePlayersPickedBtn" Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="418" Canvas.Top="275" Click="completePlayersPickedBtn_Click" Height="42" Width="87">Færdig</Button>
                         </Canvas>
                         <Border.Effect>
                             <DropShadowEffect />
                         </Border.Effect>
                     </Border>
-                    <Border x:Name="pickJudge" Visibility="Hidden" Canvas.Left="122" BorderBrush="Black" BorderThickness="1" Width="420" Height="351" Background="LightGray">
+                    <Border x:Name="pickJudge" Visibility="Hidden" Canvas.Left="98" BorderBrush="Black" BorderThickness="1" Width="420" Height="351" Background="LightGray" Canvas.Top="17">
                         <Canvas>
-                            <TextBlock FontSize="20" Canvas.Left="138" Canvas.Top="5">Dommer</TextBlock>
-                            <TextBlock FontSize="20" Canvas.Left="37" Canvas.Top="56">Alle Dommer</TextBlock>
-                            <TextBlock FontSize="20" Canvas.Left="203" Canvas.Top="56">Valgt dommer</TextBlock>
-                            <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" Height="226" Width="150" Canvas.Top="94" Canvas.Left="20">
-                                <StackPanel>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="171" Canvas.Top="4">Dommer</TextBlock>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="37" Canvas.Top="56">Alle Dommer</TextBlock>
+                            <TextBlock Foreground="White" FontFamily="Century Gothic" FontSize="20" Canvas.Left="203" Canvas.Top="56">Valgt dommer</TextBlock>
+                            <ScrollViewer  Background="White" VerticalScrollBarVisibility="Auto" Height="226" Width="150" Canvas.Top="94" Canvas.Left="20">
+                                <StackPanel x:Name="allJudges">
 
                                 </StackPanel>
                             </ScrollViewer>
                             <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" Height="226" Width="150" Canvas.Top="94" Canvas.Left="184">
-                                <StackPanel>
+                                <StackPanel x:Name="SelectedJudge">
 
                                 </StackPanel>
                             </ScrollViewer>
-                            <Button FontSize="20"  Canvas.Top="284" Canvas.Left="342">Færdig</Button>
+                            <Button x:Name="cornfirmSelectedJudge" Foreground="White" FontFamily="Century Gothic" FontSize="20"  Canvas.Top="283" Canvas.Left="340" Click="cornfirmSelectedJudge_Click" >Færdig</Button>
                         </Canvas>
                         <Border.Effect>
                             <DropShadowEffect />
                         </Border.Effect>
                     </Border>
+                    <Canvas x:Name="tourCreated" Visibility="Hidden" Background="LightGray" Height="432" Width="609">
+                        <TextBlock FontSize="50" FontFamily="Century Gothic" Foreground="White" Canvas.Left="79" Canvas.Top="26">turnering oprettet</TextBlock>
+                        <Rectangle Fill="White" Height="2" Width="470" Canvas.Left="52" Canvas.Top="92"></Rectangle>
+                    </Canvas>
                 </Canvas>
             </Canvas>
             <Canvas x:Name="overview" Visibility="Hidden" Background="LightGray" Height="432" Width="609" Canvas.Left="193">
@@ -142,6 +156,7 @@
                     </Border.Effect>
                 </Border>
             </Canvas>
+            <Image Source="C:/Users/chris/Source/Repos/taarss/CleanIT/CleanIT/images/cursor7.png" Name="customPointer" Width="34" Height="34"/>
         </Canvas>
     </Grid>
 </Window>

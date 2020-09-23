@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Esport;
 using Esport.entityLayer;
 
@@ -11,7 +12,7 @@ namespace Esport.dal
 {
     public class DatabaseHandler
     {
-        private string connectionString = "Data Source=PC-BB-5987;Initial Catalog=lolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private string connectionString = "Data Source=DESKTOP-7VJ1O7V;Initial Catalog=lolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 
         private DataSet resultSet = new DataSet();
@@ -41,6 +42,18 @@ namespace Esport.dal
             return players;
         }
 
+        public List<Judge> GetJudges()
+        {
+            DataSet dataSet = Execute("SELECT * FROM Judge");
+            DataTable customerTable = dataSet.Tables[0];
+            List<Judge> judges = new List<Judge>();
+            foreach (DataRow itemRow in customerTable.Rows)
+            {
+                judges.Add(new Judge((int)itemRow["jugdeLevel"], (string)itemRow["name"], (int)itemRow["phoneNumber"], (int)itemRow["pay"], "judge"));
+            }
+            return judges;
+        }
+
 
         /// <summary>Checks if the player exists.</summary>
         /// <param name="phoneNumber">The phone number.</param>
@@ -61,16 +74,29 @@ namespace Esport.dal
 
         public int GetNewestPlayerId()
         {
-            DataSet dataSet = Execute("SELECT id FROM Player");
+            DataSet dataSet = Execute("SELECT * FROM Player");
             DataTable customerTable = dataSet.Tables[0];
             List<int> ids = new List<int>();
-            foreach (var item in customerTable.Rows)
+            foreach (DataRow itemRow in customerTable.Rows)
             {
-                ids.Add(Convert.ToInt32(item));
+                ids.Add(Convert.ToInt32((int)itemRow["id"]));
             }
             return ids.Max();
-
         }
+
+        public int GetNewestTeamId()
+        {
+            DataSet dataSet = Execute("SELECT * FROM Team");
+            DataTable customerTable = dataSet.Tables[0];
+            List<int> ids = new List<int>();
+            foreach (DataRow itemRow in customerTable.Rows)
+            {
+                ids.Add(Convert.ToInt32((int)itemRow["id"]));
+            }
+            return ids.Max();
+        }
+
+
 
     }
 }
