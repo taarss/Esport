@@ -12,10 +12,11 @@ namespace Esport.dal
 {
     public class DatabaseHandler
     {
-        private string connectionString = "Data Source=DESKTOP-7VJ1O7V;Initial Catalog=lolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private string connectionString = "Data Source=PC-BB-5987;Initial Catalog=lolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 
         private DataSet resultSet = new DataSet();
+        //Executes the given query 
         public DataSet Execute(string query)
         {
             DataSet resultSet = new DataSet();
@@ -41,7 +42,7 @@ namespace Esport.dal
             }
             return players;
         }
-
+        //Gets all Judges and return them in a list
         public List<Judge> GetJudges()
         {
             DataSet dataSet = Execute("SELECT * FROM Judge");
@@ -49,12 +50,12 @@ namespace Esport.dal
             List<Judge> judges = new List<Judge>();
             foreach (DataRow itemRow in customerTable.Rows)
             {
-                judges.Add(new Judge((int)itemRow["jugdeLevel"], (string)itemRow["name"], (int)itemRow["phoneNumber"], (int)itemRow["pay"], "judge", (int)itemRow["id"]));
+                judges.Add(new Judge((int)itemRow["level"], (string)itemRow["name"], (int)itemRow["phoneNumber"], (int)itemRow["pay"], "judge", (int)itemRow["id"]));
             }
             return judges;
         }
 
-
+        //Gets all Tournaments and return them in a list
         public List<Tournament> GetTournament()
         {
             DataSet dataSet = Execute("SELECT * FROM Tournament");
@@ -67,6 +68,8 @@ namespace Esport.dal
             return tournaments;
         }
 
+
+        //Gets all sponsers and return them in a list
         public List<Sponser> GetSponser()
         {
             DataSet dataSet = Execute("SELECT * FROM Sponser");
@@ -79,6 +82,7 @@ namespace Esport.dal
             return sponsers;
         }
 
+        //Gets all Technicians and return them in a list
         public List<Technician> GetTechnician()
         {
             DataSet dataSet = Execute("SELECT * FROM Technician");
@@ -86,11 +90,12 @@ namespace Esport.dal
             List<Technician> technicians = new List<Technician>();
             foreach (DataRow itemRow in customerTable.Rows)
             {
-                technicians.Add(new Technician((string)itemRow["technicianLevel"], (string)itemRow["name"], (int)itemRow["phoneNumber"], (int)itemRow["pay"], "technician", (int)itemRow["id"]));
+                technicians.Add(new Technician((int)itemRow["level"], (string)itemRow["name"], (int)itemRow["phoneNumber"], (int)itemRow["pay"], "technician", (int)itemRow["id"]));
             }
             return technicians;
         }
 
+        //Gets all Salesmen and return them in a list
         public List<Salesman> GetSalesman()
         {
             DataSet dataSet = Execute("SELECT * FROM Salesman");
@@ -98,7 +103,7 @@ namespace Esport.dal
             List<Salesman> salesmen = new List<Salesman>();
             foreach (DataRow itemRow in customerTable.Rows)
             {
-                salesmen.Add(new Salesman((int)itemRow["salesmanLevel"], (string)itemRow["name"], (int)itemRow["phoneNumber"], (int)itemRow["pay"], "salesman", (int)itemRow["id"]));
+                salesmen.Add(new Salesman((int)itemRow["level"], (string)itemRow["name"], (int)itemRow["phoneNumber"], (int)itemRow["pay"], "salesman", (int)itemRow["id"]));
             }
             return salesmen;
         }
@@ -119,7 +124,47 @@ namespace Esport.dal
             }
             return false;
         }
+        //Checks if theres a staff member with the given phonenumber 
+        public bool DoesStaffExists(string phoneNumber)
+        {
+            foreach (var item in GetSalesman())
+            {
+                if (item.PhoneNumber == Convert.ToInt32(phoneNumber))
+                {
+                    return true;
+                }               
+            }
+            foreach (var item in GetTechnician())
+            {
+                if (item.PhoneNumber == Convert.ToInt32(phoneNumber))
+                {
+                    return true;
+                }
+            }
+            foreach (var item in GetJudges())
+            {
+                if (item.PhoneNumber == Convert.ToInt32(phoneNumber))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
+        public bool DoesSponserExists(string companyName)
+        {
+            foreach (var item in GetSponser())
+            {
+                if (item.CompanyName == companyName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        //Gets the most recent player id from the database
         public int GetNewestPlayerId()
         {
             DataSet dataSet = Execute("SELECT * FROM Player");
@@ -132,6 +177,7 @@ namespace Esport.dal
             return ids.Max();
         }
 
+        //Gets the most recent team id from the database
         public int GetNewestTeamId()
         {
             DataSet dataSet = Execute("SELECT * FROM Team");
@@ -144,6 +190,21 @@ namespace Esport.dal
             return ids.Max();
         }
 
+        //Deletes the given row in the gicen coulumn
+        public void DeleteRow(int index, string deleteLocation)
+        {
+            String query = $"DELETE {deleteLocation} WHERE id = {index}";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {                
+                connection.Open();
+                int result = command.ExecuteNonQuery();
+
+                // Check Error
+                if (result < 0)
+                    MessageBox.Show("Error while inserting private customer into database");
+            }
+        }
 
 
     }

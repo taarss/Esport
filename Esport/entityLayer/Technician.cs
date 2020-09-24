@@ -6,13 +6,13 @@ namespace Esport.entityLayer
 {
     public class Technician : Staff
     {
-        private string technicianType;
+        private int level;
 
-        public Technician(string technicianType, string name, int phoneNumber, int pay, string jobType, int id) : base(name, phoneNumber, pay, jobType, id)
+        public Technician(int level, string name, int phoneNumber, int pay, string jobType, int id) : base(name, phoneNumber, pay, jobType, id)
         {
-            this.TechnicianType = technicianType;
+            this.level = level;
         }
 
-        public string TechnicianType { get => technicianType; set => technicianType = value; }
+        public int Level { get => level; set => level = value; }
     }
 }

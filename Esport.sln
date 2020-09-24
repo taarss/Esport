@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esport", "Esport\Esport.csproj", "{00B247A4-4D2D-462C-B705-92707AA734FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esport", "Esport\Esport.csproj", "{00B247A4-4D2D-462C-B705-92707AA734FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{56862CBD-F476-4B7F-ABD8-5E6FF502D241}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{00B247A4-4D2D-462C-B705-92707AA734FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00B247A4-4D2D-462C-B705-92707AA734FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00B247A4-4D2D-462C-B705-92707AA734FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56862CBD-F476-4B7F-ABD8-5E6FF502D241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56862CBD-F476-4B7F-ABD8-5E6FF502D241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56862CBD-F476-4B7F-ABD8-5E6FF502D241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56862CBD-F476-4B7F-ABD8-5E6FF502D241}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

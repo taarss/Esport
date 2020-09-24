@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Esport.dal;
 using Esport.business;
 using Esport.entityLayer;
+using System.Data.SqlClient;
 
 namespace Esport
 {
@@ -33,6 +34,8 @@ namespace Esport
         private bool teamTwoPicked;
         private bool judgeSelected;
         private int judgeId;
+        private int overviewIndex;
+        private string staffType;
         private List<int> team1Id = new List<int>();
         private List<int> team2Id = new List<int>();
 
@@ -49,7 +52,8 @@ namespace Esport
                 ApiHandler apiHandler = new ApiHandler();
                 try
                 {
-                    apiHandler.getUser(playerUsername.Text);                   
+                    //Med hjælp fra Nico
+                        apiHandler.getUser(playerUsername.Text);                   
                         DatabaseHandler databaseHandler = new DatabaseHandler();
                         if (databaseHandler.DoesPlayerExists(playerPhoneNumber.Text) == true)
                         {
@@ -113,7 +117,7 @@ namespace Esport
             }
             if (staffReg.IsChecked == true)
             {
-                regtournament.Visibility = Visibility.Visible;
+                regStaff.Visibility = Visibility.Visible;
             }
         }
 
@@ -125,7 +129,7 @@ namespace Esport
             }
             else if (judgeSelected == true)
             {
-                
+                tourCreated.Visibility = Visibility.Visible;
                 business.CreateTournament(tourName.Text, maxTeamPlayers.ToString(), team1Id, team2Id, judgeId);
                 team1Id.Clear();
                 team2Id.Clear();
@@ -375,13 +379,15 @@ namespace Esport
             overviewPanel.Visibility = Visibility.Hidden;
             SelectedJudge.Children.Clear();
             registrerMenu.Visibility = Visibility.Hidden;
-
+            inputStaffInfo.Visibility = Visibility.Hidden;
+            regStaff.Visibility = Visibility.Hidden;
 
         }
 
         private void regBtn_Click(object sender, RoutedEventArgs e)
         {
             registrerMenu.Visibility = Visibility.Visible;
+            overview.Visibility = Visibility.Hidden;
         }
 
         private void OnMouseMoveHandler(object sender, MouseEventArgs e)
@@ -406,8 +412,9 @@ namespace Esport
 
         private void overviewSale_Click(object sender, RoutedEventArgs e)
         {
+            overviewIndex = 0;
             overviewStackpanel.Children.Clear();
-            overviewPanel.Visibility = Visibility.Visible;
+            overviewPanel.Visibility = Visibility.Visible;            
             DatabaseHandler databaseHandler = new DatabaseHandler();
             List<Salesman> players = databaseHandler.GetSalesman();
             foreach (var item in players)
@@ -415,6 +422,7 @@ namespace Esport
                 Button button = new Button();
                 button.Content = item.Name;
                 button.Tag = item.Id;
+                button.Click += new RoutedEventHandler(clickDetails_Click);
                 overviewStackpanel.Children.Add(button);
                 index++;
             }
@@ -422,6 +430,7 @@ namespace Esport
 
         private void overviewTech_Click(object sender, RoutedEventArgs e)
         {
+            overviewIndex = 1;
             overviewStackpanel.Children.Clear();
             DatabaseHandler databaseHandler = new DatabaseHandler();
             overviewPanel.Visibility = Visibility.Visible;
@@ -431,6 +440,7 @@ namespace Esport
                 Button button = new Button();
                 button.Content = item.Name;
                 button.Tag = item.Id;
+                button.Click += new RoutedEventHandler(clickDetails_Click);
                 overviewStackpanel.Children.Add(button);
                 index++;
             }
@@ -438,6 +448,7 @@ namespace Esport
 
         private void overviewJudges_Click(object sender, RoutedEventArgs e)
         {
+            overviewIndex = 2;
             overviewStackpanel.Children.Clear();
             overviewPanel.Visibility = Visibility.Visible;
             DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -447,6 +458,7 @@ namespace Esport
                 Button button = new Button();
                 button.Content = item.Name;
                 button.Tag = item.Id;
+                button.Click += new RoutedEventHandler(clickDetails_Click);
                 overviewStackpanel.Children.Add(button);
                 index++;
             }
@@ -454,6 +466,7 @@ namespace Esport
 
         private void overviewTour_Click(object sender, RoutedEventArgs e)
         {
+            overviewIndex = 3;
             overviewStackpanel.Children.Clear();
             overviewPanel.Visibility = Visibility.Visible;
             DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -463,6 +476,7 @@ namespace Esport
                 Button button = new Button();
                 button.Content = item.TournamentName;
                 button.Tag = item.Id;
+                button.Click += new RoutedEventHandler(clickDetails_Click);
                 overviewStackpanel.Children.Add(button);
                 index++;
             }
@@ -470,6 +484,7 @@ namespace Esport
 
         private void overviewPlayers_Click(object sender, RoutedEventArgs e)
         {
+            overviewIndex = 4;
             overviewStackpanel.Children.Clear();
             overviewPanel.Visibility = Visibility.Visible;
             DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -479,6 +494,7 @@ namespace Esport
                 Button button = new Button();
                 button.Content = item.IngameName;
                 button.Tag = item.Id;
+                button.Click += new RoutedEventHandler(clickDetails_Click);
                 overviewStackpanel.Children.Add(button);
                 index++;
             }
@@ -486,6 +502,7 @@ namespace Esport
 
         private void overviewSponser_Click(object sender, RoutedEventArgs e)
         {
+            overviewIndex = 5;
             overviewStackpanel.Children.Clear();
             overviewPanel.Visibility = Visibility.Visible;
             DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -495,9 +512,298 @@ namespace Esport
                 Button button = new Button();
                 button.Content = item.CompanyName;
                 button.Tag = item.Id;
+                button.Click += new RoutedEventHandler(clickDetails_Click);
                 overviewStackpanel.Children.Add(button);
                 index++;
             }
         }
+
+        private void overviewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addNewSponser = false;
+            teamIndex = 0;
+            index = 0;
+            index2 = 0;
+            maxTeamPlayers = 0;
+            teamOnePicked = false;
+            teamTwoPicked = false;
+            judgeSelected = false;
+            regtournament.Visibility = Visibility.Hidden;
+            pickPlayers.Visibility = Visibility.Hidden;
+            pickJudge.Visibility = Visibility.Hidden;
+            tourCreated.Visibility = Visibility.Hidden;
+            overview.Visibility = Visibility.Visible;
+            overviewPanel.Visibility = Visibility.Hidden;
+            SelectedJudge.Children.Clear();
+            registrerMenu.Visibility = Visibility.Hidden;
+            inputStaffInfo.Visibility = Visibility.Hidden;
+            regStaff.Visibility = Visibility.Hidden;
+        }
+
+        private void clickDetails_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            deleteCrudBtn.Tag = button.Tag;
+            detailsCrudBtn.Tag = button.Tag;
+            crudPopupBox.Visibility = Visibility.Visible;
+        }
+
+
+
+        private void exitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            System.Environment.Exit(1);
+        }
+
+        private void closeCrudPopUpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            crudPopupBox.Visibility = Visibility.Hidden;
+            
+            
+        }
+
+        private void deleteCrudBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            string deleteLocation = "";
+            Button button = sender as Button;
+            switch (overviewIndex)
+            {
+                case 0:
+                    deleteLocation = "Salesman";
+                    break;
+                case 1:
+                    deleteLocation = "Technician";
+                    break;
+                case 2:
+                    deleteLocation = "Judge";
+                    break;
+                case 3:
+                    deleteLocation = "Tournament";
+                    break;
+                case 4:
+                    deleteLocation = "Player";
+                    break;
+                case 5:
+                    deleteLocation = "Sponser";
+                    break;
+            }
+            databaseHandler.DeleteRow(Convert.ToInt32(button.Tag), deleteLocation);
+            switch (overviewIndex)
+            {
+                case 0:
+                    deleteLocation = "Salesman";
+                    overviewSale_Click(new object(), new RoutedEventArgs());
+                    break;
+                case 1:
+                    deleteLocation = "Technician";
+                    overviewTech_Click(new object(), new RoutedEventArgs());
+                    break;
+                case 2:
+                    deleteLocation = "Judge";
+                    overviewJudges_Click(new object(), new RoutedEventArgs());
+                    break;
+                case 3:
+                    deleteLocation = "Tournament";
+                    overviewTour_Click(new object(), new RoutedEventArgs());
+
+                    break;
+                case 4:
+                    deleteLocation = "Player";
+                    overviewPlayers_Click(new object(), new RoutedEventArgs());
+                    break;
+                case 5:
+                    deleteLocation = "Sponser";
+                    overviewSponser_Click(new object(), new RoutedEventArgs());
+                    break;
+            }
+            crudPopupBox.Visibility = Visibility.Hidden;
+
+        }
+
+        private void regStaffBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            business.CreateStaff(Convert.ToInt32(inputLevel.Text), inputName.Text, Convert.ToInt32(inputPhone.Text), Convert.ToInt32(inputPay.Text), staffType);
+
+        }
+
+        private void regStaffTypeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (isJudge.IsChecked == true)
+            {
+                staffType = "Judge";
+            }
+            else if (isSale.IsChecked == true)
+            {
+                staffType = "Salesman";
+            }
+            else if (isTech.IsChecked == true)
+            {
+                staffType = "Technician";
+            }
+            inputStaffInfo.Visibility = Visibility.Visible;
+        }
+
+        private void detailsCrudBtn_Click(object sender, RoutedEventArgs e)
+        {
+            crudPopupBox.Visibility = Visibility.Hidden;
+            overviewDetailsPanel.Visibility = Visibility.Visible;
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            string getLocation = "";
+            Button button = sender as Button;
+            switch (overviewIndex)
+            {
+                case 0:
+                    getLocation = "Salesman";
+                    SetStaffDetails(index, "Salesman");
+                    break;
+                case 1:
+                    getLocation = "Technician";
+                    SetStaffDetails(index, "Technician");
+                    break;
+                case 2:
+                    getLocation = "Judge";
+                    SetStaffDetails(index, "Judge");
+                    break;
+                case 3:
+                    getLocation = "Tournament";
+                    SetTourDetails(Convert.ToInt32(button.Tag));
+                    break;
+                case 4:
+                    getLocation = "Player";
+                    SetPlayerDetails(Convert.ToInt32(button.Tag));
+                    break;
+                case 5:
+                    getLocation = "Sponser";
+                    SetSponserDetails(Convert.ToInt32(button.Tag));
+                    break;
+            }
+        }
+
+
+        private void SetStaffDetails(int index, string jobType)
+        {
+
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            if (jobType == "Judge")
+            {
+                List<Judge> judges = databaseHandler.GetJudges();
+                foreach (var item in judges)
+                {
+                    if (item.Id == index)
+                    {
+                        textblockPhone.Text = "Telefon";
+                        nameInputTxt.Text = item.Name;
+                        phoneInputTxt.Text = item.PhoneNumber.ToString();
+                        textblock1.Text = "Dommer niveau";
+                        textblock2.Text = "Løn";
+                        textblock1input.Text = item.JudgeLevel1.ToString();
+                        textblock2input.Text = item.Pay.ToString();
+                    }
+                }
+
+            }
+            if (jobType == "Technician")
+            {
+                List<Technician> technicians = databaseHandler.GetTechnician();
+                foreach (var item in technicians)
+                {
+                    if (item.Id == index)
+                    {
+                        textblockPhone.Text = "Telefon";
+                        nameInputTxt.Text = item.Name;
+                        phoneInputTxt.Text = item.PhoneNumber.ToString();
+                        textblock1.Text = "Dommer niveau";
+                        textblock2.Text = "Løn";
+                        textblock1input.Text = item.Level.ToString();
+                        textblock2input.Text = item.Pay.ToString();
+                    }
+                }
+            }
+            if (jobType == "Salesman")
+            {
+                List<Salesman> salesmen = databaseHandler.GetSalesman();
+                foreach (var item in salesmen)
+                {
+                    if (item.Id == index)
+                    {
+                        textblockPhone.Text = "Telefon";
+                        nameInputTxt.Text = item.Name;
+                        phoneInputTxt.Text = item.PhoneNumber.ToString();
+                        textblock1.Text = "Dommer niveau";
+                        textblock2.Text = "Løn";
+                        textblock1input.Text = item.SalesmanLevel.ToString();
+                        textblock2input.Text = item.Pay.ToString();
+                    }
+                }
+            }
+        }
+
+        private void SetPlayerDetails(int index)
+        {
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Player> players = databaseHandler.GetPlayers();
+            foreach (var item in players)
+            {
+                if (item.Id == index)
+                {
+                    textblockPhone.Text = "Telefon";
+                    nameInputTxt.Text = item.Name;
+                    phoneInputTxt.Text = item.PhoneNumber;
+                    textblock1.Text = "Ingame name";
+                    textblock2.Text = "Rank";
+                    textblock1input.Text = item.IngameName;
+                    textblock2input.Text = item.Rank.ToString();
+                }
+            }
+        }
+
+        private void SetTourDetails(int index)
+        {
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Tournament> players = databaseHandler.GetTournament();
+            foreach (var item in players)
+            {
+                if (item.Id == index)
+                {
+
+                    nameInputTxt.Text = item.TournamentName;
+                    textblockPhone.Text = "";
+                    phoneInputTxt.Text = "";
+                    textblock1.Text = "Type";
+                    textblock2.Text = "";
+                    textblock1input.Text = item.TournamentType;
+                    textblock2input.Text = "";
+                }
+            }
+        }
+
+        public void SetSponserDetails(int index)
+        {
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            List<Sponser> sponsers = databaseHandler.GetSponser();
+            foreach (var item in sponsers)
+            {
+                if (item.Id == index)
+                {
+
+                    nameInputTxt.Text = item.CompanyName;
+                    textblockPhone.Text = item.Field;
+                    phoneInputTxt.Text = "Branche";
+                    textblock1.Text = "Beløb";
+                    textblock2.Text = "Spiller id";
+                    textblock1input.Text = item.Cost.ToString();
+                    textblock2input.Text = item.PlayerId.ToString();
+                }
+            }
+        }
+
+        private void closeDetailsOverviewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            overviewDetailsPanel.Visibility = Visibility.Hidden;
+
+        }
     }
+    
 }
